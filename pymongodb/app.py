@@ -1,7 +1,9 @@
 import pymongo
 from flask import Flask, jsonify, request
+from secrets import secret
 
-client = pymongo.MongoClient("mongodb+srv://ani123:MongoDB123@dmo.dfwdvje.mongodb.net/")
+connection_url = secret.get("url")
+client = pymongo.MongoClient(secret)
 db = client["sample_training"]
 collection = db["routes"]
 
@@ -14,8 +16,10 @@ def post_routes(route, num):
         return
     return
         
-def get_routes():
-    return collection.find()
+def get_routes(query):
+    collection.find(query)
+    
+
 if __name__ == "__main__":
     print("Hello World!")
     print("Database Name: ", db.name)
